@@ -1,0 +1,86 @@
+﻿1. How the internet works.
+2. To get the IP address 
+3. Check for 4 types of cache :
+4. Check for caching
+5. Browser Cache
+6. OS cache would be there commands like ​​gethostname
+7. Router cache
+8. ISP cache
+9. 4 types of cache in order to reduce latency
+10. You would have to go to your DNS server for checking the IP address
+(Government blocks websites by stopping DNS IPs in local ISP feed)
+(DNS - 8.8.8.8) Internet guy first checks this when issue
+11. You will initiate the connection to the DNS server
+12. www.google.com : DNS look up at 3 levels :
+13. Base DNS server google.com
+14. www-> google -> .com -> www.google.com -> 
+15. You would initiate the connection to the server having the data for your website
+16. TCP/IP Connection with the server
+17. 3 way handshake
+18. What happens in 3 way handshake
+   1. Syn package to the server (are you open for connection)
+   2. SYN/ACK package back to the client suggesting I am open for connection
+   3. Server will send an acknowledgement for the syn/ack
+19. Browser is going to a get call in order to get the data http request 
+20. Server could respond with 
+   1. HTML 
+   2. JSON 
+   3. XML 
+   Headers - General, Request, Response
+21. In order to store data on the client end there are two things that can be used 
+   1. Cookie - 4kb of data, everytime server client interacts with each other cookies are going to be sent between server and client, 
+   Cookies can be set by your backend onto the frontend. Fast website loading, personalised data. document.cookie
+   2. Local storage - it is going to give you 5mb of data storage. Some website banners gone once closed(boolean flag in local).
+   3. Session Storage - bank websites, session expired : tab close/switch config
+   4. indexed DB - usecase : offline mode for some website, more memory needed
+22. Server would respond back with the data
+   1. 1xx - info
+   2. 2xx - success
+   3. 3xx - redirect
+   4. 4xx - client errors
+   5. 5xx - server errors
+23. Browser will receive an html document 
+24. Parse the html line by line
+25. DOM - Document Object Model
+26. Tree like structure which is formed from your html - tree like structure, rendered on screen
+27. Script tag is encountered 
+28. Css tag is encountered - add style to HTML
+   1. Html
+        Head                body
+                        P.color:red        div
+29. The css would be added to each html element and cssom 
+   1. CSSOM - DOM + CSS
+30. JS or CSS are going to be downloaded and then they are going to executed - line by line
+31. What are the different ways in which JS can be added onto your website
+   1. Inline - inline would be downloaded with HTML, bloated - huge time to load
+   2. Script tag - size of HTML/ readability problem, maintenance hard, bloated
+   3. External JS  - cached, downloaded from 3rd oarty - network call
+32. <Script> console.log()</script>
+33. Html html html html html script downloaded downloaded downloaded downloaded executed executed executed executed executed html html html
+34. Block rendering. JS added to end of HTML to render HTML first & then download JS.
+35. Async and Defer https://www.thatjsdude.com/images/asyncVsDefer.jpg 
+   1. <script href=”index.js” async> : parsing & download in parallel, but execution JS first then further rendering
+   2. <script href=”index.js” defer> : parsing & download in parallel, but first complete HTML rendering, then JS execution
+   Microsoft Clarity : Heatmaps of user spent places on a wensite page. : Free for analytics.
+   Async helpful : capture user interaction with website even with half HTML rendered, so JS needed
+   Also, GTM(Google Tag Manager) marketing scripts for showing ADs - async, but now load time cautionary - moving to defer
+   User created scripts - defer (end of cycle)
+   (everything should be defered as much as possible)
+36. Why should the page speed be fast
+Scaler masterclass ad - click - mostly mobile website - 4G network : slow - need faster loading - else user gone. So,
+   1. In order to reduce ad spends (ad spends is per click basis) - make every user click efficient(conversion to customer)
+   2. Page speed is important for SEO(Search Engine Optimisation) purpose : https://pagespeed.web.dev/
+   3. For ranking in google search  - scoring by web crawler from tags
+   4. Use experience
+37. How to increase the page speed 
+   1. Reduce the size of JS and CSS pages - download/transfer over network
+   2. Minify(remove white spaces) and uglify(variable size smaller) your JS and CSS
+   3. Make a size limit of 200kb max for the images
+   4. https://tinypng.com/ To compress the images
+   5. You should use WEBP format in order to add your images
+   6. Caching the images and js and css
+      1. Browser Cache
+      2. CDN Caching - server close to home network
+   7. Use sprite images - multiple company logos (1 image) : width adjusted - 1 file instead of 100s network calls
+   8. Font awesome or icomoon in order use icons instead images
+   9. Lazyloading of the images - download image when scroll on website happens
