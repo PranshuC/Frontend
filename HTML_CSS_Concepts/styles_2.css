@@ -1,0 +1,54 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  #app {
+    width: 400px;
+    height: 400px;
+    background: yellow;
+    position: relative;
+  }
+  
+  .box {
+    width: 150px;
+    height: 150px;
+    background: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .box::after {
+    content: "<";
+    display: block;
+  }
+  
+  .box::before {
+    content: "before";
+    display: block;
+  }
+  
+  /* .box:hover {
+    transform: scale(1.2);
+  } */
+  
+  /* 
+  px value for position only given when absolutely 
+  sure of fixed positioning
+  So, margin-left & margin-top : 50px
+  (hard-coded but relative to height/width of same CSS)
+  Or, margin-left: calc(-100px/2) - again hardcoded
+  (In CSS, calc takes mathematical expresssions)
+  Finally, transform: translate(-50%, -50%);
+  (transform commonly used - rotate etc. - many usecases)
+  
+  psuedo elements in css 
+  
+  before after hover
+  
+  vh
+  vw
+  
+  */
+  

@@ -30,6 +30,35 @@ html {
     background: purple;
   }
 
+  @media (min-width: 768px) and (max-width: 1048px) {
+    html {
+      font-size: 7.5px;
+    }
+  
+    #app {
+      background: red;
+    }
+  }
+  
+  @media (min-width: 1048px) and (max-width: 1300px) {
+    html {
+      font-size: 9px;
+    }
+    #app {
+      background: yellow;
+    }
+  }
+  
+  /* mobile */
+  @media (min-width: 320px) and (max-width: 768px) {
+    html {
+      font-size: 5px;
+    }
+    #app {
+      background: green;
+    }
+  }
+  
 /*
    Specificity principal says :
    id- 100
@@ -87,10 +116,12 @@ html {
     height: 20em;
     font-size: 10px;
     /* 
-    20rem 20*16  
-    x*16= 200
+    20rem (20*16) : html -> font-size: 16px;
+    x * 16 = 200
     x = 200/16
-    x=12.5
+    x = 12.5 (bit tedious) [20rem for html font-size: 10px]
+    Advantage over px : responsive web-designs - lesser CSS
+    @media query is also helpful 
     */
     background: yellow;
     margin-bottom: 60px;
@@ -151,10 +182,52 @@ html {
     background: green;
   }
   
-  /* 
+/* 
   inline-block elements always leave some margin, but
   float - floats either left/right, come out in parent
   float: left - one | two | three; float: right - three | two | one
-  */
+*/
 
  /*  https://css-tricks.com/centering-css-complete-guide/ */
+ 
+ .parent {
+    width: 10vw;
+    height: 10vh;
+  }
+  
+  /*
+
+  Positions :
+  1) Relative
+position: relative - move relative to itself based on values of :
+top, right, bottom, left
+  2) Absolute
+position: absolute - Going to be positioned based on the last positioned
+parent or based on the body if there isn't last positioned element
+(chooses last parent with position: relative)
+(NEVER give absolute child & absolute parent)
+  3) Fixed
+fixed position ex : chat-widget - bottom-right
+or, banners for advertisement (top/bottom)
+(dependent on body, not on parent)
+  4) Sticky
+sticky is relative until we reach it, after which it is fixed. Ex : navbar
+  [5) Static]
+  
+
+  Units in CSS :
+  1) px - smallest unit in CSS (1 dot in screen)
+  2) rem - rem unit is relative to the document's root element
+  (root parent element = html)
+  Ex : 2rem = 2 * fontsize of html
+  3) em - unit is only relative to the immediate parent/ targeted element itself
+  4) % - in percentage comparison with parent
+  5) vh - viewport height & vw - viewport width
+  1vh is equivalent to 1% of the viewport height. (viewport : available screen size)
+
+  
+  @media query is helpful : reponsive website
+  Make multiple screen sizes compatible
+  
+  */
+  
