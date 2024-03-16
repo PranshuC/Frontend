@@ -14,6 +14,7 @@
     "@types/react": "18.2.38",
     "@types/react-dom": "18.2.15",
     "loader-utils": "3.2.1",
+    "@babel/runtime": "7.13.8",
     "typescript": "4.4.4"
   },
   "scripts": {
