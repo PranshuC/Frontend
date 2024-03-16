@@ -1,0 +1,66 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+  }
+  
+  .parent {
+    margin: 10px;
+    display: flex;
+    height: 600px;
+    border: 1px solid black;
+    align-items: center;
+    background: #d2d2d2;
+    flex-wrap: wrap;
+  }
+  
+  .box {
+    flex-basis: 200px;
+    height: 200px;
+    background: pink;
+  }
+  
+  .box:hover {
+    transform: scale(1.05);
+  }
+  
+  .blue {
+    background: blue;
+    align-self: flex-end;
+  }
+  
+  .green {
+    background: green;
+  }
+  
+  .red {
+    background: red;
+  }
+
+/*
+  FLEX PLAYGROUND : https://codepen.io/enxaneta/full/adLPwv/
+  .parent -> display: flex - by default, horizontally aligned
+  flex-direction: column, becomes vertically aligned
+  Similarly, row-reverse & column-reverse do opp. of above 2
+
+  .box:hover -> transform: scale(1.05) - box appears to zoom in
+  psuedo-selector : hover/click
+
+  Responsive, box sizes scale down when screen size reduces
+  flex-wrap: wrap - keeps same box size & few come down
+
+  align-items: center - brings boxes to center of parent
+
+  justify-content: space-between - 4 spaces between 5 boxes
+  space-around - 10 divisions od same space around 5 boxes
+
+  more boxes than 1 line -
+  align-content: space-between - multiple lines' content spaced
+  space-around - content of multiple lines spaced around
+
+  Above are flex to parent, if need for element :
+  align-self: flex-end - moves to end of space available
+  flex-grow - 1 element grows bigger than others to ocuppy space
+  (elemento 1: 1/0). Similar, flex-shrink (0 - shouldn't shrink)
+  flex-basis - width defined
+
+*/
