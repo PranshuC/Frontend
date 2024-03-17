@@ -155,3 +155,215 @@ export function abc() {}
 React only happen in uni-direction.
 Ex : index.js -> App.js -> Products.js -> ProductCard.js
 
+
+### REACT SESSION 3 (29 Aug 2023)
+
+#### Virtual DOM
+
+- Javascript - even a part of screen change, whole s creen refreshed.
+Everything is a object, so we need to create the tree-like structure.
+- React - create a replica & change only parts of changes. Example :
+```javascript
+function App() {
+  return (
+    <div>
+      <ul id="ul" className="list">
+        <li id="item-1"><a>Item 1</a></li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        {show && <li>Item 4</li>}
+      </ul>
+      <button onClick={() => (!show)}>
+        Toggle
+      </button>
+    </div>
+  )
+}
+```
+
+ - Tree-like structure :
+```javascript
+       div
+    ul      // button
+li  li li li
+```
+
+ - Current Virtual DOM (nested object):
+```javascript
+let currentVdom = {
+  nodeName: 'div',
+  children: [
+    {
+      nodeName: 'ul',
+      properties: {
+        className: 'list',
+        children: [
+          {
+            nodeName: 'li',
+            properties: {
+              id: 'item-1',
+              children: [
+                {
+                  nodeName: 'a',
+                  children: ['Item 1']
+                }
+              ]
+            }
+          },
+          {
+            nodeName: 'li',
+            properties: {
+              children: [
+                'Item 2'
+              ]
+            }
+          },
+          {
+            nodeName: 'li',
+            properties: {
+              children: [
+                'Item 3'
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      nodeName: 'button',
+      children: ['Toggle']
+    }
+  ]
+}
+```
+
+ - object of object notation - JSON
+ - Virtual DOM created after changes :
+```javascript
+let newVDom = {
+  nodeName: 'div',
+  children: [
+    {
+      nodeName: 'ul',
+      properties: {
+        className: 'list',
+        children: [
+          {
+            nodeName: 'li',
+            properties: {
+              id: 'item-1',
+              children: [
+                {
+                  nodeName: 'a',
+                  children: ['Item 1']
+                }
+              ]
+            }
+          },
+          {
+            nodeName: 'li',
+            properties: {
+              children: [
+                'Item 2'
+              ]
+            }
+          },
+          {
+            nodeName: 'li',
+            properties: {
+              children: [
+                'Item 3'
+              ]
+            }
+          },
+          {
+            nodeName: 'li',
+            properties: {
+              children: [
+                'Item 4'
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      nodeName: 'button',
+      children: ['Toggle']
+    }
+  ]
+}
+```
+
+ - **Diffing algorithm** : newVdom - currentVdom = changes
+ - applyChanges(diff(newVdom, currentVdom)). Add :      
+```javascript    
+{
+    nodeName: 'li',
+    properties: {
+        children: [
+        'Item 4'
+        ]
+    }
+}
+```
+ - Chrome -> Developer tools -> More tools -> Rendering -> Paint flashing.
+ Shows all the changes/ rendering happening in real-time on webpage.
+ Helps to view DOM manipulation in Javascript VS React.
+
+##### Why "key" is important in Virtual DOM? 
+Interview Q, Explanation Example :
+```javascript 
+oldDom = [
+  <ProductCard title="Title 1" />,
+  <ProductCard title="Title 2" />,
+  <ProductCard title="Title 3" />
+]
+newDom = [
+  <ProductCard  title="Title 1" />,,
+  <ProductCard  title="Title 4" />
+  <ProductCard  title="Title 2" />,
+  <ProductCard  title="Title 3" />
+]
+```
+Object by object comparison (when comes to 2nd ProductCard) :
+1. change second card title to title 4
+2. change product card title to title 2
+3. add product card with title 3
+
+But, comparison when "key" is provided :
+```javascript
+oldDom = [
+  <ProductCard key={1} title="Title 1" />,
+  <ProductCard key={2} title="Title 2" />,
+  <ProductCard key={3} title="Title 3" />
+]
+newDom = [
+  <ProductCard key={1}  title="Title 1" />,
+  <ProductCard key={4}  title="Title 4" />,
+  <ProductCard key={2}  title="Title 2" />,
+  <ProductCard key={3}  title="Title 3" />
+]
+```
+Simple : add 4 with title 4 after key 1
+
+ - "key" should <u>never be the index of the map</u>. Reason :
+```javascript
+oldDom = [
+  <ProductCard key={1} title="Title 1" />,
+  <ProductCard key={2} title="Title 2" />,
+  <ProductCard key={3} title="Title 3" />
+]
+newDom = [
+  <ProductCard key={1}  title="Title 1" />,
+  <ProductCard key={2}  title="Title 4" />,
+  <ProductCard key={3}  title="Title 2" />,
+  <ProductCard key={4}  title="Title 3" />
+]
+```
+Changes will be equivalent to, without "key" used :
+1. change product card 2 with title 4
+2. change product card 3 with title 2
+3. add product card 4 with title 3
+
+Only unique value for "key" is the only requirement.
