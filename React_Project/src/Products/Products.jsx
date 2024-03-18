@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"; // named export from react package
 import ProductCard from "../ProductCard";
 
 const products = [
@@ -33,14 +34,54 @@ const products = [
   }
 ];
 
+// setTimeout adds asynchronity
+// function getProductsApi() {
+//   setTimeout(function() {
+//     // currently return in setTimeout & not getProductsApi
+//     // so getProductsApi() returns undefined causing error
+//     return products;
+//   }, 1000);
+// }
+function getProductsApi(callback) {
+  setTimeout(function() {
+    callback(products);
+  }, 1000);
+}
+
+// API call in order to get the data
 export default function Products() {
-    return (
-    <div>
-        {products.map((product) => {
-        return <ProductCard product={product} key={product.title}/>
-        })}
-    </div>
-    );
+  let [gp, setGp] = useState([]); // [stateVar, setterFunc]
+  // 1. value missed on mounting
+  //gp = getProductsApi();
+  // 2. useState hook used - 3 API calls
+  /*getProductsApi(
+    function(res) {
+      //gp = res;
+      setGp(res);
+    }
+  );*/
+  // loader until response returns
+  let [isLoading, setLoading] = useState(true);
+  // 3. useEffect hook based on depedency state variable
+  useEffect(
+    function() {
+      getProductsApi(function(res) {
+          setGp(res);
+          setLoading(false);
+        });
+    }, [gp]);
+    if(isLoading){
+      //return <div>Loading...</div>;
+      <img alt="loader" src="https://giphy.com/embed/3o7bu3XilJ5BOiSGic"/>
+    } else {
+      return (
+      <div>
+          {gp.map((product) => {
+          return <ProductCard product={product} key={product.title}/>
+          })}
+      </div>
+      );
+    }
 }
 
 // Usecase : 10x ProductCards with individual numbering
@@ -59,3 +100,9 @@ export default function Products() {
 // We need id in order to compare in Virual DOM.
 // In this case, key={product.title} adds uniqueness
 // It is required only in loops
+
+// frontend -> api -> backend
+// backend collects data and sends response to frontend
+// setTimeout mocks the delay in backend response
+
+// Q : how not to return undefined from getProductsApi() call

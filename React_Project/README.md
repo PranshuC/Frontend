@@ -367,3 +367,55 @@ Changes will be equivalent to, without "key" used :
 3. add product card 4 with title 3
 
 Only unique value for "key" is the only requirement.
+
+
+### REACT SESSION 4 (2 Sep 2023)
+
+#### State variable in React
+Special kind of variable,
+whose value once set would cause a re-render of the component.
+It would persist the value of the var on every re-render.
+
+ - Mounting - Order of execution :
+index.js => app.js => products.js => productCard.js
+ - rendering - mounting hsppens first time but rendering occurs at state change
+
+ - hooks in react are nothing but a helper function.
+Repetitive stuff in react could be delegated to a function.
+Function's job would be to do the repetitive stuff.
+These functions => hooks in react.
+    1. Custom hooks
+    2. System defined hooks. Ex : useState.
+    They are always named like this : useName,
+    
+    - Hooks need to be at the top of the component.
+    - Hooks can't be inside if conditions or for loops.
+    - Hook can't be used in order to render a UI.
+
+- **useState**(default Value). 
+return [stateVar, setterFn]. 
+Within setterFn(), 2 things happening : setting and re-rendering
+
+Q : Even the children \<ProductCard> will be re-rendered?
+(Products.jsx) Understand how the child is getting re-rendered - 
+React smartly checks the state variable value(if changed)
+and stops the re-rendering after 3 times
+(3rd extra API call happens to re-check stateVar's value).
+
+ - **useEffect** hook : useEffect(fn, []);
+I will call this callback function,
+everytime dependent on this dependency array :
+    - When there is no dependency array.
+    - Where there is an empty dependency array
+    - When there is some value in this array
+
+What can be passed in this dependency array?
+You can pass a state variable and props from the parent which is a state variable.
+
+useEffect removes the 3rd API call - [gp] check happens in 2nd call itself
+If [], then only called once, while mounting
+
+> .tsx files (TypeScript) are just a wrapper over .jsx files,
+where the type are better defined to show errors where required.
+Ex : JS just goes with NaN for number to string typecast,
+but TS throws error in such situations, more accurate!
