@@ -65,11 +65,21 @@ export default function Products() {
   // 3. useEffect hook based on depedency state variable
   useEffect(
     function() {
-      getProductsApi(function(res) {
+      /*getProductsApi(function(res) {
           setGp(res);
           setLoading(false);
-        });
+        });*/
+      // 4. "fetch" returns a promise
+      fetch("https://602fc537a1e9d20017af105e.mockapi.io/api/v1/products")
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => {
+        setGp(response);
+        setLoading(false);
+      });
     }, [gp]);
+
     if(isLoading){
       //return <div>Loading...</div>;
       <img alt="loader" src="https://giphy.com/embed/3o7bu3XilJ5BOiSGic"/>

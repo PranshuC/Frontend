@@ -419,3 +419,142 @@ If [], then only called once, while mounting
 where the type are better defined to show errors where required.
 Ex : JS just goes with NaN for number to string typecast,
 but TS throws error in such situations, more accurate!
+
+
+### REACT SESSION 5 (5 Sep 2023)
+
+#### AJAX
+**Asynchronous JS and XML**
+Fetch - ajax call with promises in order to get the data from backend
+
+**Axios** is a promise-based library, so you need to implement some 
+promise-based asynchronous HTTP requests. 
+jQuery and AJAX also perform the same job but in React project, 
+React handles each and everything in its own virtual DOM, 
+so there is no need to use jQuery at all.
+
+The concept which we would want to learn the barebone structure of fetch
+is AJAX.
+ - client => ajax => api => server => returns data => client => renders
+
+You would need to make a connection with the server.
+```javascript
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  // opening a connection b/w client and server
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+```
+*XMLHttpRequest* is an constructor function,
+which creates an object in order to create a connection b/w 
+server and client and send the data to and fro.
+- xhttp object
+    - ready state 
+    - status
+- callback *onreadystatechange*. 
+Everytime ready state is going to be changing values.
+Ready state(enum) values :
+    - 0 unset - it is still in the process of connecting
+    - 1 opened - the connection has been opened
+    - 2 header received - server received the headers
+    - 3 loading - data is getting processed
+    - 4 done - when the client has recieved all the relevant data<br>
+
+Backend what it does is that it has a controller.
+Controller you write functions to fetch data from backend and manipulate that data.
+Send it to the client when it is needed.
+You create a route. Ex: scaler.com/user-info<br>
+We don't use AJAX in React, but "fetch" function.
+
+
+**Promises**
+Imagine that there is a famous singer.<br>
+Q: When will the new album be launched, here's my email!<br>
+S: Whenever I launch my album, I promise to send it to your mail.<br>
+Ex : resolve - mail delivered, reject - mail failed delivery.
+
+```javascript
+var p = new Promise(function(resolve, reject) {
+    // executor function - either resolve or reject
+    // Example : sendMail
+    // if(sendMail(emaiId)) {resolve()}
+    // else {reject()}
+    setTimeout(function() {
+        resolve(1);
+    }, 1000) // asynchronous
+    //reject(1);
+})
+```
+States in promises :
+- initially "pending" state
+- sucess => "fulfilled" state
+- failure => "rejected" state
+
+```javascript
+p.then(
+    function(res) {
+        console.log(res)
+    },
+    function(rej) {
+        console.log(rej)
+    }
+)
+```
+**then** function would have 2 params
+- 1st param - seccess function
+- 2nd param - reject function
+
+The above function will wait until asynchronous function executes,
+then returns either resolved or rejected message
+
+Modifying old AJAX function with new *promise* wrapper :
+```javascript
+function customAjax(type, url) {
+    return new Promise(function(resolve, reject) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                resolve(this.responseText);
+            }
+            if(this.status != 200) {
+                reject(new Error("network error"))
+            }
+        };
+        xhttp.open(type, url, true);
+        xhttp.send();
+    })
+}
+customAjax("GET", "ajax_info.txt").then(function(res) {
+    console.log(res);
+})
+```
+**fetch** is more or less the same above thing <br>
+Promise chaining -
+When we return from a promise, it can return another promise :
+```javascript
+new Promise(function(resolve, reject) {
+    resolve(2);
+}).then(
+    function(res) {
+        console.log(res);
+        return (res*2);
+    }/*, function(rej) {
+        console.log(rej);
+    }*/
+).then(function(res) {
+    console.log(res);
+    return (res*2);
+}).then(function(res) {
+    console.log(res);
+}).catch(function(rej) { 
+    // using common rejection function for all
+    console.log(rej);
+})
+```
+*fetch* is built on promise & ajax.
