@@ -558,3 +558,78 @@ new Promise(function(resolve, reject) {
 })
 ```
 *fetch* is built on promise & ajax.
+
+
+### REACT PROJECT 3 (9 Sep 2023)
+
+**useCallback hook** : *App2.js* - explainer JS example<br>
+1. Simple function :
+*function setCount() { return count + 1; }*<br>
+Initially just \<ChildComponent count={count} /> re-rendered both 
+parent & child with either textBoxCharacterChange or buttonClick.
+
+2. Use of *{memo} from "react"* & wrapping 
+ChildComponent function with memo()<br>
+Stops re-render of child when textBoxCharacterChange 
+because just count in props change when button clicked.
+React memo checks for changes between the previous and 
+current values for a given prop passed to the component.
+
+3. props {count: value, onclick: function} sent to ChildComponent,
+re-render of child with textBoxCharacterChange again. Reason :<br>
+Function  has a reference - <br>
+a => 1 when re-renders, becomes a => 2<br>
+So, (prev a === curr a) => false, because "a" re-renders when 
+"a" is passed as a function to the child. <br>
+4. UseCase is that, you want a to retain this previous reference "1"
+even when there is a re-render. So, useCallback(a, []); <br>
+Re-render a = 1, (prev a === curr a) => true <br>
+Child would not be rerendered.
+
+Example in *App2.js* :<br>
+incrementCount = 1203, incrementCount = 2010 
+(reference addresses changed).
+With useCallbacks, incrementCount = 1203 (reference unchanged)<br>
+incrementCount ref is going to change only if the value of 
+count changes. useCallback is going to retain the reference of 
+the function on re-renders and it would change the 
+function's reference only on change of the dependency "count".
+```javascript
+useCallback(() => setCount(count + 1), [count]);
+```
+useCallback - memoize a function
+
+**useRef hook** : *App3.js* - explainer JS example<br>
+*useRef* provides you with two advantages :
+- It lets you get an element in react using reference
+- It will act as a data retention method on reloads
+
+useRef hook takes a default value in the function as a parameter:<br>
+useRef(default value) Ex : *const inputRef = useRef(0);*
+
+1. The variable that is created using *useRef*
+is an object and you can access the value set using useRef
+using a key named current. Ex : inputRef.current.value<br>
+Example :
+```javascript
+// For text input field
+<input id="txtbx" ref={inputRef} type="text" />
+// in React
+const inputRef = useRef(0);
+console.log("react", inputRef.current.value);
+// and in JS
+let a = document.getElementById("txtbx");
+console.log("js", a.value);
+// prints same input value
+```
+2. Unlike *useState* or *useEffect*, changes to a useRef don't 
+trigger re-renders of the component. This makes *useRef* an 
+excellent choice for storing values that you want to persist 
+across re-renders but don't want to cause re-rendering. <br>
+Example :
+```javascript
+// Value doesn't increase unless button clicked
+console.log("click ref", valueRef.current);
+// value changes even when text typed : re-rendered
+console.log("state", count);
+```
